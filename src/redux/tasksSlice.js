@@ -38,14 +38,13 @@ const tasksSlice = createSlice({
       state.contacts.splice(index, 1);
     },
     filterTask(state, action) {
-      // const filter = action.payload;
-      // const visibleContacts = state?.contacts.filter(element =>
-      //   element?.name
-      //     .toLocaleUpperCase()
-      //     .includes(action.payload.toLocaleUpperCase())
-      // );
-      // return { ...state, filter, visibleContacts };
-      state.filter = action.payload;
+      const filter = action.payload;
+      const visibleContacts = state?.contacts.filter(element =>
+        element?.name
+          .toLocaleUpperCase()
+          .includes(action.payload.toLocaleUpperCase())
+      );
+      return { ...state, filter, visibleContacts };
     },
   },
 });
