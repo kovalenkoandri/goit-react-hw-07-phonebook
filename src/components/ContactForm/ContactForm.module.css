@@ -1,0 +1,22 @@
+.phonebookForm {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  outline: 2px solid #000;
+}
+.phonebookForm * {
+  margin-bottom: 20px;
+}
+.inputName {
+  display: block;
+}
+@media screen and (min-device-width: 600px) {
+  .phonebookForm {
+    width: 30vw;
+  }
+}
+@media screen and (min-device-width: 210px) and (max-device-width: 599px) {
+  .phonebookForm {
+    width: 90vw;
+  }
+}

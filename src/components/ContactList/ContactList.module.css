@@ -1,0 +1,16 @@
+.renderLi {
+  line-height: 3;
+}
+.renderBtn {
+  font-size: 20px;
+  line-height: 0.5;
+  box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  transition-property: transform;
+  transition-duration: 300ms;
+  transition-timing-function: linear;
+  transition-delay: 0;
+}
+.renderBtn:hover {
+  /* transform: rotateX(360deg); */
+  cursor: pointer;
+}
