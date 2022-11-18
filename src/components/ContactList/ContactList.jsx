@@ -1,14 +1,14 @@
 import css from './ContactList.module.css';
 import { rmTask } from 'redux/tasksSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts, getVisibleContacts, getFilter } from 'redux/selectors';
+import { getItems, getVisibleContacts, getFilter } from 'redux/selectors';
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const items = useSelector(getItems);
   const filter = useSelector(getFilter);
   const visibleContacts = useSelector(getVisibleContacts);
   let renderContacts;
-  filter ? (renderContacts = visibleContacts) : (renderContacts = contacts);
+  filter ? (renderContacts = visibleContacts) : (renderContacts = items);
   return (
     <ul>
       {renderContacts.map(element => {

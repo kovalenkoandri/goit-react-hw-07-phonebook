@@ -2,19 +2,19 @@ import css from './ContactForm.module.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTask } from 'redux/tasksSlice';
-import { getContacts } from 'redux/selectors';
+import { getItems } from 'redux/selectors';
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const handleChangeName = event => setName(event.target.value);
   const handleChangeNumber = event => setNumber(event.target.value);
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const items = useSelector(getItems);
   const handleSubmit = (name, number, event) => {
     event.preventDefault(); // except refresh page onSubmit
     const form = event.target;
     if (
-      contacts.some(el =>
+      items.some(el =>
         el.name.toLocaleUpperCase().includes(name.toLocaleUpperCase())
       )
     ) {

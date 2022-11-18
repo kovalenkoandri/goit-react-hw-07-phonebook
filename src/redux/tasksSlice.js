@@ -7,7 +7,6 @@ const initialState = {
     isLoading: false,
     error: null
   },
-  // contacts: [],
   filter: '',
   visibleContacts: [],
 };
@@ -41,8 +40,27 @@ const tasksSlice = createSlice({
       );
       return { ...state, filter, visibleContacts };
     },
+    fetchingInProgress(state) {
+      state.contacts.isLoading = true;
+    },
+    fetchingSuccess(state, action) {
+      state.contacts.isLoading = false;
+      state.contacts.error = null;
+      state.contacts.items = action.payload;
+    },
+    fetchingError(state, action) {
+      state.contacts.isLoading = false;
+      state.contacts.error = action.payload;
+    },
   },
 });
 
 export const rootReducer = tasksSlice.reducer;
-export const { addTask, rmTask, filterTask } = tasksSlice.actions;
+export const {
+  addTask,
+  rmTask,
+  filterTask,
+  fetchingInProgress,
+  fetchingSuccess,
+  fetchingError,
+} = tasksSlice.actions;
