@@ -1,15 +1,33 @@
 import css from './ContactForm.module.css';
 import { useState } from 'react';
-import PropTypes from 'prop-types';
-const ContactForm = ({ onSubmit }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { addTask } from 'redux/tasksSlice';
+import { getContacts } from 'redux/selectors';
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const handleChangeName = event => setName(event.target.value);
   const handleChangeNumber = event => setNumber(event.target.value);
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+  const handleSubmit = (name, number, event) => {
+    event.preventDefault(); // except refresh page onSubmit
+    const form = event.target;
+    if (
+      contacts.some(el =>
+        el.name.toLocaleUpperCase().includes(name.toLocaleUpperCase())
+      )
+    ) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
+    dispatch(addTask(name, number));
+    form.reset();
+  };
   return (
     <form
       className={css.phonebookForm}
-      onSubmit={event => onSubmit(name, number, event)}
+      onSubmit={event => handleSubmit(name, number, event)}
       autoComplete="off"
     >
       <label htmlFor="name">Name</label>
@@ -35,7 +53,7 @@ const ContactForm = ({ onSubmit }) => {
         className={css.inputName}
         onChange={handleChangeNumber}
         // value={number}
-        // if uncomment from.reset() doesn't work at App.jsx 
+        // if uncomment from.reset() doesn't work at App.jsx
       />
       <button type="submit">Add contact</button>
     </form>
@@ -43,6 +61,3 @@ const ContactForm = ({ onSubmit }) => {
 };
 
 export default ContactForm;
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};

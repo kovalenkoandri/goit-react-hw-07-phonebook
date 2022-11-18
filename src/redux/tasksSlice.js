@@ -27,7 +27,7 @@ const tasksSlice = createSlice({
       },
     },
     rmTask(state, action) {
-      const index = state.contacts.findIndex(
+      const index = state.contacts.items.findIndex(
         task => task.id === action.payload
       );
       state.contacts.items.splice(index, 1);
