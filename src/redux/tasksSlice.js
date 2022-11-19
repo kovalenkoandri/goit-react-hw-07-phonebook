@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
+import { fetchTasks } from './operations';
 
 const initialState = {
   contacts: {
@@ -40,15 +41,17 @@ const tasksSlice = createSlice({
       );
       return { ...state, filter, visibleContacts };
     },
-    fetchingInProgress(state) {
+  },
+  extraReducers: {
+    [fetchTasks.pending](state) {
       state.contacts.isLoading = true;
     },
-    fetchingSuccess(state, action) {
+    [fetchTasks.fulfilled](state, action) {
       state.contacts.isLoading = false;
       state.contacts.error = null;
       state.contacts.items = action.payload;
     },
-    fetchingError(state, action) {
+    [fetchTasks.rejected](state, action) {
       state.contacts.isLoading = false;
       state.contacts.error = action.payload;
     },
@@ -60,7 +63,4 @@ export const {
   addTask,
   rmTask,
   filterTask,
-  fetchingInProgress,
-  fetchingSuccess,
-  fetchingError,
 } = tasksSlice.actions;
