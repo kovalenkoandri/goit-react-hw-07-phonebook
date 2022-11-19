@@ -1,12 +1,16 @@
 import css from './ContactList.module.css';
 import { deleteContact } from 'redux/operations';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems, getVisibleContacts, getFilter } from 'redux/selectors';
+import {
+  selectItems,
+  selectVisibleContacts,
+  selectFilter,
+} from 'redux/selectors';
 const ContactList = () => {
   const dispatch = useDispatch();
-  const items = useSelector(getItems);
-  const filter = useSelector(getFilter);
-  const visibleContacts = useSelector(getVisibleContacts);
+  const items = useSelector(selectItems);
+  const filter = useSelector(selectFilter);
+  const visibleContacts = useSelector(selectVisibleContacts);
   let renderContacts;
   filter ? (renderContacts = visibleContacts) : (renderContacts = items);
   return (
