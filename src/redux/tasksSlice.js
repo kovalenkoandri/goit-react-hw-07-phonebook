@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
-import { fetchTasks } from './operations';
+import { fetchTasks, addTask } from './operations';
 
 const initialState = {
   contacts: {
@@ -15,17 +14,6 @@ const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    addTask: {
-      reducer(state, action) {
-        state.contacts.items.push(action.payload);
-      },
-      prepare(name, number) {
-        const id = nanoid();
-        return {
-          payload: { id, name, number },
-        };
-      },
-    },
     rmTask(state, action) {
       const index = state.contacts.items.findIndex(
         task => task.id === action.payload
@@ -55,12 +43,23 @@ const tasksSlice = createSlice({
       state.contacts.isLoading = false;
       state.contacts.error = action.payload;
     },
+    [addTask.pending](state) {
+      state.contacts.isLoading = true;
+    },
+    [addTask.fulfilled](state, action) {
+      state.contacts.isLoading = false;
+      state.contacts.error = null;
+      state.contacts.items.push(action.payload);
+    },
+    [addTask.rejected](state, action) {
+      state.contacts.isLoading = false;
+      state.contacts.error = action.payload;
+    },
   },
 });
 
 export const rootReducer = tasksSlice.reducer;
 export const {
-  addTask,
   rmTask,
   filterTask,
 } = tasksSlice.actions;

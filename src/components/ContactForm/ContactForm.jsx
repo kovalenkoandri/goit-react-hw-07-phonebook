@@ -1,16 +1,16 @@
 import css from './ContactForm.module.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTask } from 'redux/tasksSlice';
 import { getItems } from 'redux/selectors';
+import { addTask } from 'redux/operations';
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
   const handleChangeName = event => setName(event.target.value);
-  const handleChangeNumber = event => setNumber(event.target.value);
+  const handleChangePhone = event => setPhone(event.target.value);
   const dispatch = useDispatch();
   const items = useSelector(getItems);
-  const handleSubmit = (name, number, event) => {
+  const handleSubmit = (name, phone, event) => {
     event.preventDefault(); // except refresh page onSubmit
     const form = event.target;
     if (
@@ -21,13 +21,13 @@ const ContactForm = () => {
       alert(`${name} is already in contacts.`);
       return;
     }
-    dispatch(addTask(name, number));
+    dispatch(addTask({name, phone}));
     form.reset();
   };
   return (
     <form
       className={css.phonebookForm}
-      onSubmit={event => handleSubmit(name, number, event)}
+      onSubmit={event => handleSubmit(name, phone, event)}
       autoComplete="off"
     >
       <label htmlFor="name">Name</label>
@@ -51,7 +51,7 @@ const ContactForm = () => {
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
         className={css.inputName}
-        onChange={handleChangeNumber}
+        onChange={handleChangePhone}
         // value={number}
         // if uncomment from.reset() doesn't work at App.jsx
       />

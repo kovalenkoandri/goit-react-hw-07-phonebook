@@ -14,3 +14,30 @@ export const fetchTasks = createAsyncThunk(
     }
   }
 );
+
+export const addTask = createAsyncThunk(
+  'tasks/addTask',
+  async ({name, phone}, thunkAPI) => {
+    try {
+      const response = await axios.post('/contacts', {
+        name,
+        phone,
+      });
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const deleteTask = createAsyncThunk(
+  'tasks/deleteTask',
+  async (taskId, thunkAPI) => {
+    try {
+      const response = await axios.delete(`/tasks/${taskId}`);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
