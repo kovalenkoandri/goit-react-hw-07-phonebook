@@ -1,5 +1,5 @@
 import css from './ContactList.module.css';
-import { deleteTask } from 'redux/operations';
+import { deleteContact } from 'redux/operations';
 import { useSelector, useDispatch } from 'react-redux';
 import { getItems, getVisibleContacts, getFilter } from 'redux/selectors';
 const ContactList = () => {
@@ -19,7 +19,7 @@ const ContactList = () => {
             <button
               type="button"
               className={css.renderBtn}
-              onClick={() => dispatch(deleteTask(id))}
+              onClick={() => dispatch(deleteContact(id))}
             >
               Delete
             </button>
