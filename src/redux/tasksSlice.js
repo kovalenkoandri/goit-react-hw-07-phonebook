@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchTasks, addTask } from './operations';
+import { fetchTasks, addTask, deleteTask } from './operations';
 
 const initialState = {
   contacts: {
@@ -14,12 +14,6 @@ const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    rmTask(state, action) {
-      const index = state.contacts.items.findIndex(
-        task => task.id === action.payload
-      );
-      state.contacts.items.splice(index, 1);
-    },
     filterTask(state, action) {
       const filter = action.payload;
       const visibleContacts = state.contacts.items.filter(element =>
@@ -55,11 +49,25 @@ const tasksSlice = createSlice({
       state.contacts.isLoading = false;
       state.contacts.error = action.payload;
     },
+    [deleteTask.pending](state) {
+      state.contacts.isLoading = true;
+    },
+    [deleteTask.fulfilled](state, action) {
+      state.contacts.isLoading = false;
+      state.contacts.error = null;
+      const index = state.contacts.items.findIndex(
+        task => task.id === action.payload
+      );
+      state.contacts.items.splice(index, 1);
+    },
+    [deleteTask.rejected](state, action) {
+      state.contacts.isLoading = false;
+      state.contacts.error = action.payload;
+    },
   },
 });
 
 export const rootReducer = tasksSlice.reducer;
 export const {
-  rmTask,
   filterTask,
 } = tasksSlice.actions;
