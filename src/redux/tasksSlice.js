@@ -51,7 +51,7 @@ const tasksSlice = createSlice({
       state.contacts.isLoading = false;
       state.contacts.error = null;
       const index = state.contacts.items.findIndex(
-        task => task.id === action.payload
+        task => task.id === action.payload.id
       );
       state.contacts.items.splice(index, 1);
     },
